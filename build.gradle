@@ -15,9 +15,28 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
+ 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+jar {
+
+    baseName = "my-web"
+    version = "${version}"
+    manifest {
+        attributes 'Title': 'my-web',
+                   'Version': 1.0,
+                   'Main-Class': 'com.example.MyWebApplication'
+    }
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
+
 
 repositories {
 	mavenCentral()
